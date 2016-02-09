@@ -1,5 +1,6 @@
 var app = require('commander');
 var Runner = require('./runner');
+var Logger = require('./logger');
 
 function list(val) {
     return val.split(',');
@@ -14,7 +15,8 @@ app
         'image/png',
         'image/svg+xml'
     ])
-    .option('-h, --header <header>', 'added header name', 's3optim')
+    .option('-k, --header <header>', 'added header name', 's3optim')
+    .option('-v, --verbose', 'verbosity level', function (v, a) { return a + 1; }, 0)
     .parse(process.argv);
 
-new Runner({buckets: app.buckets, mime: app.mime}).run();
+new Runner(app, new Logger({verbosity: app.verbose || 0, exitOnError: true})).run();
