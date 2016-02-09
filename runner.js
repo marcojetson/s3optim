@@ -119,15 +119,14 @@ Runner.prototype.optimizeObject = function (object, callback) {
 };
 
 Runner.prototype.replaceObject = function (object, callback) {
-    var metadata = {};
-    metadata[this.settings.header] = '' + new Date().getTime();
+    object.Headers.Metadata[this.settings.header] = '' + new Date().getTime();
 
     var request = {
         Bucket: object.Bucket.Name,
         Key: object.Key,
         Body: object.OptimizedContents,
         ContentType: object.Headers.ContentType,
-        Metadata: metadata
+        Metadata: object.Headers.Metadata
     };
 
     this.client.upload(request, function (err, upload) {
@@ -135,7 +134,8 @@ Runner.prototype.replaceObject = function (object, callback) {
             this.logger.warn('Failed to upload object "' + object.Key + '": ' + err);
         }
 
-        this.logger.info('Object "' + object.Key + '" optimized');
+        var optimizedPercent = Math.round(100 - (object.OptimizedContents.length * 100 / object.Contents.Body.length));
+        this.logger.info('Object "' + object.Key + '" optimized by ' + optimizedPercent + '%');
     }.bind(this));
 };
 
