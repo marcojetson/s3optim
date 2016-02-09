@@ -1,6 +1,6 @@
 {
   "name": "s3optim",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Optimizes images in S3",
   "repository": {
     "type": "git",
@@ -8,10 +8,10 @@
   },
   "license": "BSD-3-Clause",
   "dependencies": {
-      "async": "1.5.*",
-      "aws-sdk": "2.2.*",
-      "commander": "2.9.*",
-      "imagemin": "4.0.*"
+    "async": "1.5.*",
+    "aws-sdk": "2.2.*",
+    "commander": "2.9.*",
+    "imagemin": "4.0.*"
   },
   "bin": {
     "s3optim": "index.js"
